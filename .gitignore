@@ -1,0 +1,17 @@
+# Python files
+*.pyc
+__pycache__
+
+# Database
+db.sqlite
+
+# Environment variables
+.env
+venv/
+
+# IDE specific files
+.vscode/
+.idea/
+
+# Flask specific
+instance/
