@@ -28,23 +28,23 @@ def register_user(data):
     role_name = 'GUEST'  # Role default untuk user baru
 
     if User.query.filter_by(username=username).first():
-        return jsonify({"message": "Username already exists"}), 400
+        return jsonify({"status": 400, "message": "Username already exists"}), 400
 
     hashed_password = hash_password(password)
     role = Role.query.filter_by(name=role_name).first()  # Pastikan Role telah diimport dari model
     if not role:
-        return jsonify({"message": f"Role {role_name} not found"}), 404
+        return jsonify({"status": 404, "message": f"Role {role_name} not found"}), 404
 
     new_user = User(username=username, password=hashed_password, email=email, role_id=role.id)
     db.session.add(new_user)
     db.session.commit()
 
-    return jsonify({"message": "User created successfully"}), 201
+    return jsonify({"status": 201, "message": "User created successfully"}), 201
 
 def update_guest_role(data):
     auth_header = request.headers.get('Authorization')
     if not auth_header:
-        return jsonify({"message": "Authorization header is missing"}), 401
+        return jsonify({"status": 401, "message": "Authorization header is missing"}), 401
 
     try:
         guest_username = data.get('username')
@@ -52,19 +52,19 @@ def update_guest_role(data):
 
         guest_user = User.query.filter_by(username=guest_username).first()
         if not guest_user or guest_user.role.name == 'SUPERADMIN':
-            return jsonify({"message": "Guest user not found or cannot be updated"}), 404
+            return jsonify({"status": 404, "message": "Guest user not found or cannot be updated"}), 404
 
         new_role = Role.query.filter_by(name=new_role_name).first()
         if not new_role:
-            return jsonify({"message": f"Role {new_role_name} not found"}), 404
+            return jsonify({"status": 404, "message": f"Role {new_role_name} not found"}), 404
 
         guest_user.role_id = new_role.id
         db.session.commit()
 
-        return jsonify({"message": f"Role of {guest_username} updated successfully"}), 200
+        return jsonify({"status": 200, "message": f"Role of {guest_username} updated successfully"}), 200
 
     except Exception as e:
-        return jsonify({"message": f"Error: {str(e)}"}), 500
+        return jsonify({"status": 500, "message": f"Error: {str(e)}"}), 500
 
 def login_user(data):
     username = data.get('username')

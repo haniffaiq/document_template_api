@@ -4,7 +4,7 @@ from db import db
 from routes import register_routes
 from dotenv import load_dotenv
 import os
-
+from flask_cors import CORS
 
 def create_app():
     app = Flask(__name__)
@@ -24,6 +24,9 @@ def create_app():
 
     register_routes(app)
     jwt = JWTManager(app)
+
+    # Konfigurasi CORS untuk mengizinkan dari semua origin
+    CORS(app)
 
     return app
 

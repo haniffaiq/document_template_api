@@ -11,7 +11,7 @@ def check_role(required_role):
             roles = flask_jwt_extended.get_jwt().get("role")
             # Misalnya, periksa jika current_user langsung adalah role yang diinginkan
             if roles != required_role:
-                return jsonify({'message': 'Unauthorized'}), 401
+                return jsonify({"status": 401, "message": "Unauthorized"}), 401
 
             return func(*args, **kwargs)
         return wrapper
