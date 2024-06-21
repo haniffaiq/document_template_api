@@ -2,7 +2,7 @@
 
 from flask import jsonify, request
 from werkzeug.security import generate_password_hash, check_password_hash
-from models.users.users import User, Role # Pastikan import model User yang sesuai
+from models.users.users import User, Role 
 from db import db
 import hashlib
 from middleware import check_role, get_jwt_identity
