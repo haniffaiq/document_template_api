@@ -29,3 +29,7 @@ def login():
     data = request.get_json()
     result = login_user(data)
     return result
+
+@auth_bp.route('/', methods=['GET'])
+def data():
+    return jsonify("Hallo")
