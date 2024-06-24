@@ -1,6 +1,4 @@
-Nama Proyek Anda
 
-Deskripsi singkat proyek Anda di sini.
 
 ## Table of Contents
 
