@@ -8,7 +8,7 @@ import hashlib
 from middleware import check_role, get_jwt_identity
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity
 
-# Fungsi-fungsi utilitas
+# == Fungsi-fungsi utilitas ===
 def hash_password(password):
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
     return hashed_password
@@ -21,11 +21,13 @@ def generate_token(username, role):
     access_token = create_access_token(identity=username, additional_claims={"role": role})
     return access_token
 
+
+# == Fungsi Controller ===
 def register_user(data):
     username = data.get('username')
     email = data.get('email')
     password = data.get('password')
-    role_name = 'GUEST'  # Role default untuk user baru
+    role_name = 'ADMIN'  # Role default untuk user baru
 
     if User.query.filter_by(username=username).first():
         return jsonify({"status": 400, "message": "Username already exists"}), 400
