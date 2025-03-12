@@ -3,10 +3,10 @@ from db import db
 
 # Helper function to get model based on table name
 def get_model_by_name(table_name):
-    if table_name == 'project':
-        from models.core.project import Project, db
-        return Project
-    elif table_name == 'surat_pernyataan':  # Example for another table
+    # if table_name == 'project':
+    #     from models.core.project import Project, db
+    #     return Project
+    if table_name == 'surat_pernyataan':  # Example for another table
         from models.core.surat_pernyataan import SuratPernyataan
         return SuratPernyataan
     elif table_name == 'ringkasan_kontrak':  # Example for another table
@@ -24,6 +24,9 @@ def get_model_by_name(table_name):
     elif table_name == 'berita_acara_serah_terima_uang_muka':  # Example for another table
         from models.core.berita_acara_serah_terima_uang_muka import BeritaAcaraSerahTerimaUangMuka
         return BeritaAcaraSerahTerimaUangMuka
+    elif table_name == 'lampiran_berita_acara_serah_terima_uang_muka':  # Example for another table
+        from models.core.lampiran_berita_acara_serah_terima_uang_muka import LampiranBeritaAcaraSerahTerimaUangMuka
+        return LampiranBeritaAcaraSerahTerimaUangMuka
     # Add more tables as necessary...
     else:
         return None
