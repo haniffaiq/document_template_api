@@ -19,7 +19,7 @@ def list_projects():
 # Route to get a specific project by ID
 @project_bp.route('/<int:project_id>', methods=['GET'])
 def get_by_id(project_id):
-    return get_project_by_id(project_id)
+    return get_tables_with_project_id(project_id)
 
 # Route to update a project by ID
 @project_bp.route('/<int:project_id>', methods=['PUT'])

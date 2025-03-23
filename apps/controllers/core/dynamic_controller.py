@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from db import db
-
+from models.core.project import Project 
 # Helper function to get model based on table name
 def get_model_by_name(table_name):
     # if table_name == 'project':
@@ -27,6 +27,22 @@ def get_model_by_name(table_name):
     elif table_name == 'lampiran_berita_acara_serah_terima_uang_muka':  # Example for another table
         from models.core.lampiran_berita_acara_serah_terima_uang_muka import LampiranBeritaAcaraSerahTerimaUangMuka
         return LampiranBeritaAcaraSerahTerimaUangMuka
+    elif table_name == 'berita_acara_pemeriksaan_pekerjaan':  # Example for another table
+        from models.core.berita_acara_pemeriksaan_pekerjaan import BeritaAcaraPemeriksaanPekerjaan
+        return BeritaAcaraPemeriksaanPekerjaan
+    
+    elif table_name == 'berita_acara_pemeriksaan_tahap_ke':  # Example for another table
+        from models.core.berita_acara_pemeriksaan_tahap_ke import BeritaAcaraPemeriksaanTahapKe
+        return BeritaAcaraPemeriksaanTahapKe
+    elif table_name == 'lampiran_berita_acara_pemeriksaan_tahap_ke':  # Example for another table
+        from models.core.lampiran_berita_acara_pemeriksaan_tahap_ke import LampiranBeritaAcaraPemeriksaanTahapKe
+        return LampiranBeritaAcaraPemeriksaanTahapKe
+    elif table_name == 'berita_acara_serah_terima_pekerjaan_perencanaan':  # Example for another table
+        from models.core.berita_acara_serah_terima_pekerjaan_perencanaan import BeritaAcaraSerahTerimaPekerjaanPerencanaan
+        return BeritaAcaraSerahTerimaPekerjaanPerencanaan
+    elif table_name == 'lampiran_berita_acara_pemeriksaan_pekerjaan':  # Example for another table
+        from models.core.lampiran_berita_acara_pemeriksaan_pekerjaan import LampiranBeritaAcaraPemeriksaanPekerjaan
+        return LampiranBeritaAcaraPemeriksaanPekerjaan
     # Add more tables as necessary...
     else:
         return None
@@ -48,93 +64,132 @@ def create_record(table_name, data):
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-# GET: Retrieve records (either all or by ID)
-# def get_records(table_name, record_id=None):
-#     model = get_model_by_name(table_name)
-    
-#     if not model:
-#         return jsonify({"error": f"Table {table_name} not found"}), 404
-
-#     if record_id:
-#         # Get record by ID
-#         record = model.query.get(record_id)
-#         if not record:
-#             return jsonify({"error": "Record not found"}), 404
-#         return jsonify(record.as_dict()), 200
-#     else:
-#         # Get all records
-#         records = model.query.all()
-#         return jsonify([record.as_dict() for record in records]), 200
-
-def get_records(table_name, record_id=None):
-    # Retrieve model dynamically by table name
+def get_records_with_project(table_name, record_id=None):
+    # Dynamically get the model based on the table_name
     model = get_model_by_name(table_name)
     
     if not model:
         return jsonify({"error": f"Table {table_name} not found"}), 404
 
-    # Retrieve the project model
-    project_model = get_model_by_name('project')
-    if project_model:
-        # Perform a join based on `project_id` column in the `model` table
-        query = model.query.join(project_model, model.project_id == project_model.id)
-    else:
-        query = model.query  # If no 'project' table, just return the table's records
-
     if record_id:
-        # Get a single record by ID and join the 'project' table
-        record = query.get(record_id)
+        # Get record by ID with LEFT JOIN on Project
+        record = db.session.query(model).outerjoin(Project, model.project_id == Project.id).filter(model.id == record_id).first()
+
         if not record:
             return jsonify({"error": "Record not found"}), 404
-        
-        # Combine model and project data
+
+        # Convert the record to a dictionary
         result = record.as_dict()
-        
-        # Add project fields to the result (assuming 'project' relation exists)
-        project = record.project  # This assumes the relationship is set up properly in the model
-        if project:
-            result['project'] = project.as_dict()
-        
+
+        # Include project data in the response if the record has a related project
+        if record.project:
+            result['project'] = record.project.as_dict()
+
         return jsonify(result), 200
     else:
-        # Get all records with the join to the 'project' table
-        records = query.all()
-        
-        # Use a dictionary to store results grouped by project_id
-        grouped_results = {}
+        # Get all records with LEFT JOIN on Project
+        records = db.session.query(model).outerjoin(Project, model.project_id == Project.id).all()
 
-        # Loop over all records to group them by project_id
+        # Convert records to a list of dictionaries
+        result_list = []
         for record in records:
-            project = record.project  # Assuming the relationship is set up correctly
-            
-            if project:
-                project_data = project.as_dict()
-                
-                # If the project is not yet in the grouped results, initialize it
-                if project.id not in grouped_results:
-                    grouped_results[project.id] = {
-                        'project': project_data,
-                        'records': []
-                    }
-                
-                # Add the current record to the "records" list for the correct project
-                record_data = record.as_dict()
-                grouped_results[project.id]['records'].append(record_data)
+            record_dict = record.as_dict()
+
+            # Include project data in the response if the record has a related project
+            if record.project:
+                record_dict['project'] = record.project.as_dict()
+
+            result_list.append(record_dict)
+
+        return jsonify(result_list), 200
+    
+# GET: Retrieve records (either all or by ID)
+def get_records(table_name, record_id=None):
+    model = get_model_by_name(table_name)
+    
+    if not model:
+        return jsonify({"error": f"Table {table_name} not found"}), 404
+
+    if record_id:
+        # Get record by ID
+        record = model.query.get(record_id)
+        if not record:
+            return jsonify({"error": "Record not found"}), 404
+        return jsonify(record.as_dict()), 200
+    else:
+        # Get all records
+        records = model.query.all()
+        return jsonify([record.as_dict() for record in records]), 200
+
+# def get_records(table_name, record_id=None):
+#     # Retrieve model dynamically by table name
+#     model = get_model_by_name(table_name)
+    
+#     if not model:
+#         return jsonify({"error": f"Table {table_name} not found"}), 404
+
+#     # Retrieve the project model
+#     project_model = get_model_by_name('project')
+#     if project_model:
+#         # Perform a join based on `project_id` column in the `model` table
+#         query = model.query.join(project_model, model.project_id == project_model.id)
+#     else:
+#         query = model.query  # If no 'project' table, just return the table's records
+
+#     if record_id:
+#         # Get a single record by ID and join the 'project' table
+#         record = query.get(record_id)
+#         if not record:
+#             return jsonify({"error": "Record not found"}), 404
         
-        # Convert the grouped results into a list to return
-        final_results = []
+#         # Combine model and project data
+#         result = record.as_dict()
+        
+#         # Add project fields to the result (assuming 'project' relation exists)
+#         project = record.project  # This assumes the relationship is set up properly in the model
+#         if project:
+#             result['project'] = project.as_dict()
+        
+#         return jsonify(result), 200
+#     else:
+#         # Get all records with the join to the 'project' table
+#         records = query.all()
+        
+#         # Use a dictionary to store results grouped by project_id
+#         grouped_results = {}
 
-        # Prepare the final structure as an array of project records
-        for project_id, group in grouped_results.items():
-            # Add records inside the "project" object
-            project_info = group['project']
-            project_info['records'] = group['records']
+#         # Loop over all records to group them by project_id
+#         for record in records:
+#             project = record.project  # Assuming the relationship is set up correctly
             
-            final_results.append({
-                'project': project_info  # project with associated records inside
-            })
+#             if project:
+#                 project_data = project.as_dict()
+                
+#                 # If the project is not yet in the grouped results, initialize it
+#                 if project.id not in grouped_results:
+#                     grouped_results[project.id] = {
+#                         'project': project_data,
+#                         'records': []
+#                     }
+                
+#                 # Add the current record to the "records" list for the correct project
+#                 record_data = record.as_dict()
+#                 grouped_results[project.id]['records'].append(record_data)
+        
+#         # Convert the grouped results into a list to return
+#         final_results = []
 
-        return jsonify(final_results), 200
+#         # Prepare the final structure as an array of project records
+#         for project_id, group in grouped_results.items():
+#             # Add records inside the "project" object
+#             project_info = group['project']
+#             project_info['records'] = group['records']
+            
+#             final_results.append({
+#                 'project': project_info  # project with associated records inside
+#             })
+
+#         return jsonify(final_results), 200
 
 # PUT: Update an existing record by ID
 def update_record(table_name, data, record_id):

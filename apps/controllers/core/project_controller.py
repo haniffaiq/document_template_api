@@ -1,6 +1,14 @@
 from flask import request, jsonify
 from models.core.project import Project, db
 from datetime import datetime
+from models.core.project import Project
+from models.core.surat_pernyataan import SuratPernyataan
+from models.core.ringkasan_kontrak import RingkasanKontrak
+from models.core.berita_acara_pembayaran_termin import BeritaAcaraPembayaranTermin
+from models.core.berita_acara_pembayaran_tahap import BeritaAcaraPembayaranTahap
+from models.core.kwitansi import Kwitansi
+from models.core.berita_acara_serah_terima_uang_muka import BeritaAcaraSerahTerimaUangMuka
+from models.core.lampiran_berita_acara_serah_terima_uang_muka import LampiranBeritaAcaraSerahTerimaUangMuka
 
 # Create a new project
 def create_project(data):
@@ -43,19 +51,57 @@ def get_all_projects():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-def get_project_by_id(id):
+# def get_project_by_id(id):
+#     try:
+#         # Fetch the project by ID
+#         project = Project.query.get(id)
+        
+#         # If project not found, return 404 error
+#         if not project:
+#             return jsonify({"error": "Project not found"}), 404
+        
+#         return jsonify(project.as_dict()), 200
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
+    
+def get_tables_with_project_id(id):
+    # Get the project_id from request arguments
+    project_id = id
+    
+    if not project_id:
+        return jsonify({"error": "Project ID is required"}), 400
+
     try:
-        # Fetch the project by ID
-        project = Project.query.get(id)
+        # List of models to search for project_id
+        models = [
+            ('surat_pernyataan', SuratPernyataan),
+            ('ringkasan_kontrak', RingkasanKontrak),
+            ('berita_acara_pembayaran_termin', BeritaAcaraPembayaranTermin),
+            ('berita_acara_pembayaran_tahap', BeritaAcaraPembayaranTahap),
+            ('kwitansi', Kwitansi),
+            ('berita_acara_serah_terima_uang_muka', BeritaAcaraSerahTerimaUangMuka),
+            ('lampiran_berita_acara_serah_terima_uang_muka', LampiranBeritaAcaraSerahTerimaUangMuka)
+        ]
         
-        # If project not found, return 404 error
-        if not project:
-            return jsonify({"error": "Project not found"}), 404
+        result = []
+
+        for table_name, model in models:
+            records = db.session.query(model.id).filter(model.project_id == project_id).all()
+
+            for record in records:
+                result.append({
+                    'document_name': table_name,
+                    'id': record.id,
+                })
         
-        return jsonify(project.as_dict()), 200
+        # If no records found, return a message
+        if not result:
+            return jsonify({"message": "No records found with the specified project_id"}), 404
+
+        return jsonify(result), 200
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
 def update_project(id, data):
     
     try:

@@ -15,6 +15,11 @@ def get(table_name):
     record_id = request.args.get('id', None)
     return get_records(table_name, record_id)
 
+@crud_bp.route('/crud/get_by_id/<table_name>', methods=['GET'])
+def get_with_project(table_name):
+    record_id = request.args.get('id', None)
+    return get_records_with_project(table_name, record_id)
+
 # PUT: Update an existing record by ID
 @crud_bp.route('/crud/put/<table_name>', methods=['PUT'])
 def update(table_name):
