@@ -59,6 +59,10 @@ def get_model_by_name(table_name):
     elif table_name == 'syarat_syarat_khusus_kontrak':  # Example for another table
         from models.core.syarat_syarat_khusus_kontrak import SyaratSyaratKhususKontrak
         return SyaratSyaratKhususKontrak
+    
+    elif table_name == 'history':  # Example for another table
+        from models.core.history import HistoryCrud
+        return HistoryCrud
     # Add more tables as necessary...
     else:
         return None
