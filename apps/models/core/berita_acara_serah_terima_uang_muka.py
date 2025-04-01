@@ -12,7 +12,6 @@ class BeritaAcaraSerahTerimaUangMuka(db.Model):
     tanggal_berita_acara_serah_terima_uang_muka_huruf = db.Column(db.String(255), nullable=True)
     nilai_kontrak = db.Column(db.Numeric, nullable=True)
     tanggal_surat_perjanjian_kontrak = db.Column(db.Date, nullable=True)
-    uang_yang_mustahil_dibayarkan = db.Column(db.Numeric, nullable=True)
     jumlah_yang_dibulatkan_total = db.Column(db.Numeric, nullable=True)
     jumlah_yang_dibulatkan_huruf = db.Column(db.String(255), nullable=True)
 

@@ -43,6 +43,22 @@ def get_model_by_name(table_name):
     elif table_name == 'lampiran_berita_acara_pemeriksaan_pekerjaan':  # Example for another table
         from models.core.lampiran_berita_acara_pemeriksaan_pekerjaan import LampiranBeritaAcaraPemeriksaanPekerjaan
         return LampiranBeritaAcaraPemeriksaanPekerjaan
+    
+    elif table_name == 'berita_acara_serah_terima_pekerjaan_pengawasan':  # Example for another table
+        from models.core.berita_acara_serah_terima_pekerjaan_pengawasan import BeritaAcaraSerahTerimaPekerjaanPengawasan
+        return BeritaAcaraSerahTerimaPekerjaanPengawasan
+    elif table_name == 'surat_penunjukan_penyedia_barang_jasa':  # Example for another table
+        from models.core.surat_penunjukan_penyedia_barang_jasa import SuratPenunjukanPenyediaBarangJasa
+        return SuratPenunjukanPenyediaBarangJasa
+    elif table_name == 'surat_perintah_mulai_kerja':  # Example for another table
+        from models.core.surat_perintah_mulai_kerja import SuratPerintahMulaiKerja
+        return SuratPerintahMulaiKerja
+    elif table_name == 'surat_perjanjian_kontrak':  # Example for another table
+        from models.core.surat_perjanjian_kontrak import SuratPerjanjianKontrak
+        return SuratPerjanjianKontrak
+    elif table_name == 'syarat_syarat_khusus_kontrak':  # Example for another table
+        from models.core.syarat_syarat_khusus_kontrak import SyaratSyaratKhususKontrak
+        return SyaratSyaratKhususKontrak
     # Add more tables as necessary...
     else:
         return None
