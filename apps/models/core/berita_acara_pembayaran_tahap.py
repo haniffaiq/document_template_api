@@ -1,4 +1,3 @@
-from datetime import datetime
 from db import db
 
 class BeritaAcaraPembayaranTahap(db.Model):
@@ -8,9 +7,9 @@ class BeritaAcaraPembayaranTahap(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('ikram.project.id', ondelete='CASCADE'), nullable=False)
     nama_termin_tahap_ke = db.Column(db.String(255), nullable=True)
+    tahap_ke_terbilang = db.Column(db.Text, nullable=True)  # ✅ kolom baru
     jumlah_nilai_kontrak_jumlah_total = db.Column(db.Numeric, nullable=True)
     jumlah_nilai_kontrak_huruf = db.Column(db.String(255), nullable=True)
-    tanggal_pekerjaan = db.Column(db.Date, nullable=True)
     jumlah_uang_yang_harus_dibayarkan = db.Column(db.Numeric, nullable=True)
     jumlah_uang_yang_harus_dibayarkan_huruf = db.Column(db.String(255), nullable=True)
 
