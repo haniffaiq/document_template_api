@@ -1,13 +1,18 @@
 from db import db
 from datetime import date
 from datetime import datetime
+import pytz
 class Project(db.Model):
     __tablename__ = 'project'
     __table_args__ = {'schema': 'ikram'}
 
     id = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.String(255), nullable=True)
-    createdAt = db.Column(db.DateTime(timezone=True))
+    createdAt = db.Column(
+        db.DateTime(timezone=True),
+        default=lambda: datetime.now(pytz.timezone("Asia/Jakarta")),
+        nullable=True
+    )
 
     nomor_surat_bap = db.Column(db.String(255), nullable=True)
     tanggal_surat_bap = db.Column(db.Date, nullable=True)
