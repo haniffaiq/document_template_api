@@ -9,8 +9,8 @@ class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.String(255), nullable=True)
     createdAt = db.Column(
-        db.DateTime(timezone=True),
-        default=lambda: datetime.now(pytz.timezone("Asia/Jakarta")),
+        db.DateTime(timezone=False),
+        default=lambda: datetime.now(),
         nullable=True
     )
 
