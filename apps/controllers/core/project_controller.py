@@ -9,6 +9,7 @@ from models.core.berita_acara_pembayaran_tahap import BeritaAcaraPembayaranTahap
 from models.core.kwitansi import Kwitansi
 from models.core.berita_acara_serah_terima_uang_muka import BeritaAcaraSerahTerimaUangMuka
 from models.core.lampiran_berita_acara_serah_terima_uang_muka import LampiranBeritaAcaraSerahTerimaUangMuka
+import json
 
 # Create a new project
 def create_project(data):
@@ -72,6 +73,8 @@ def get_tables_with_project_id(id):
         return jsonify({"error": "Project ID is required"}), 400
 
     try:
+        project = Project.query.get(project_id)
+        project_details = project.as_dict()
         # List of models to search for project_id
         models = [
             ('surat_pernyataan', SuratPernyataan),
@@ -93,15 +96,18 @@ def get_tables_with_project_id(id):
                     'document_name': table_name,
                     'id': record.id,
                 })
+
+        final_result = {"data" : result, "project_details" : project_details }
         
         # If no records found, return a message
         if not result:
             return jsonify({"message": "No records found with the specified project_id"}), 404
 
-        return jsonify(result), 200
+        return jsonify(final_result), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 def update_project(id, data):
     
     try:
