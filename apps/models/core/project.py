@@ -1,7 +1,6 @@
 from db import db
 from datetime import date
 from datetime import datetime
-import pytz
 class Project(db.Model):
     __tablename__ = 'project'
     __table_args__ = {'schema': 'ikram'}
