@@ -1,12 +1,19 @@
 from db import db
 from datetime import date
-
+from datetime import datetime
+import pytz
 class Project(db.Model):
     __tablename__ = 'project'
     __table_args__ = {'schema': 'ikram'}
 
     id = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.String(255), nullable=True)
+    createdAt = db.Column(
+        db.DateTime(timezone=True),
+        default=lambda: datetime.now(pytz.timezone("Asia/Jakarta")),
+        nullable=True
+    )
+
     nomor_surat_bap = db.Column(db.String(255), nullable=True)
     tanggal_surat_bap = db.Column(db.Date, nullable=True)
     tanggal_surat_bap_huruf = db.Column(db.String(255), nullable=True)
@@ -67,4 +74,10 @@ class Project(db.Model):
             setattr(self, key, value)
 
     def as_dict(self):
-        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+        result = {}
+        for column in self.__table__.columns:
+            value = getattr(self, column.name)
+            if column.name == "createdAt" and value:
+                value = value.strftime("%d-%m-%Y %H:%M:%S")
+            result[column.name] = value
+        return result
