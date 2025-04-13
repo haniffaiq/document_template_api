@@ -18,9 +18,12 @@ def get_model_by_name(table_name):
     elif table_name == 'berita_acara_pembayaran_tahap':  # Example for another table
         from models.core.berita_acara_pembayaran_tahap import BeritaAcaraPembayaranTahap
         return BeritaAcaraPembayaranTahap
-    elif table_name == 'kwitansi':  # Example for another table
-        from models.core.kwitansi import Kwitansi
-        return Kwitansi
+    elif table_name == 'kwitansi_tahap':  # Example for another table
+        from models.core.kwitansi_tahap import KwitansiTahap
+        return KwitansiTahap
+    elif table_name == 'kwitansi_termin':  # Example for another table
+        from models.core.kwitansi_termin import KwitansiTermin
+        return KwitansiTermin
     elif table_name == 'berita_acara_serah_terima_uang_muka':  # Example for another table
         from models.core.berita_acara_serah_terima_uang_muka import BeritaAcaraSerahTerimaUangMuka
         return BeritaAcaraSerahTerimaUangMuka

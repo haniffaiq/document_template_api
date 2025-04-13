@@ -1,8 +1,8 @@
 from datetime import datetime
 from db import db
 
-class Kwitansi(db.Model):
-    __tablename__ = 'kwitansi'
+class KwitansiTahap(db.Model):
+    __tablename__ = 'kwitansi_tahap'
     __table_args__ = {'schema': 'ikram'}
     
     id = db.Column(db.Integer, primary_key=True)

@@ -6,9 +6,21 @@ from models.core.surat_pernyataan import SuratPernyataan
 from models.core.ringkasan_kontrak import RingkasanKontrak
 from models.core.berita_acara_pembayaran_termin import BeritaAcaraPembayaranTermin
 from models.core.berita_acara_pembayaran_tahap import BeritaAcaraPembayaranTahap
-from models.core.kwitansi import Kwitansi
+from models.core.kwitansi_tahap import KwitansiTahap
 from models.core.berita_acara_serah_terima_uang_muka import BeritaAcaraSerahTerimaUangMuka
 from models.core.lampiran_berita_acara_serah_terima_uang_muka import LampiranBeritaAcaraSerahTerimaUangMuka
+from models.core.berita_acara_serah_terima_pekerjaan_perencanaan import BeritaAcaraSerahTerimaPekerjaanPerencanaan
+from models.core.berita_acara_pemeriksaan_tahap_ke import BeritaAcaraPemeriksaanTahapKe
+from models.core.syarat_syarat_khusus_kontrak import SyaratSyaratKhususKontrak
+from models.core.surat_perjanjian_kontrak import SuratPerjanjianKontrak
+from models.core.kwitansi_termin import KwitansiTermin
+from models.core.berita_acara_serah_terima_pekerjaan_pengawasan import BeritaAcaraSerahTerimaPekerjaanPengawasan
+from models.core.berita_acara_pemeriksaan_pekerjaan import BeritaAcaraPemeriksaanPekerjaan
+from models.core.surat_penunjukan_penyedia_barang_jasa import SuratPenunjukanPenyediaBarangJasa
+from models.core.surat_perintah_mulai_kerja import SuratPerintahMulaiKerja
+from models.core.lampiran_berita_acara_pemeriksaan_pekerjaan import LampiranBeritaAcaraPemeriksaanPekerjaan
+from models.core.lampiran_berita_acara_pemeriksaan_tahap_ke import LampiranBeritaAcaraPemeriksaanTahapKe
+
 import json
 
 # Create a new project
@@ -81,10 +93,22 @@ def get_tables_with_project_id(id):
             ('ringkasan_kontrak', RingkasanKontrak),
             ('berita_acara_pembayaran_termin', BeritaAcaraPembayaranTermin),
             ('berita_acara_pembayaran_tahap', BeritaAcaraPembayaranTahap),
-            ('kwitansi', Kwitansi),
+            ('kwitansi_tahap', KwitansiTahap),
             ('berita_acara_serah_terima_uang_muka', BeritaAcaraSerahTerimaUangMuka),
-            ('lampiran_berita_acara_serah_terima_uang_muka', LampiranBeritaAcaraSerahTerimaUangMuka)
+            ('lampiran_berita_acara_serah_terima_uang_muka', LampiranBeritaAcaraSerahTerimaUangMuka),
+            ('berita_acara_serah_terima_pekerjaan_perencanaan', BeritaAcaraSerahTerimaPekerjaanPerencanaan),
+            ('berita_acara_pemeriksaan_tahap_ke', BeritaAcaraPemeriksaanTahapKe),
+            ('syarat_syarat_khusus_kontrak', SyaratSyaratKhususKontrak),
+            ('surat_perjanjian_kontrak', SuratPerjanjianKontrak),
+            ('kwitansi_termin', KwitansiTermin),
+            ('berita_acara_serah_terima_pekerjaan_pengawasan', BeritaAcaraSerahTerimaPekerjaanPengawasan),
+            ('berita_acara_pemeriksaan_pekerjaan', BeritaAcaraPemeriksaanPekerjaan),
+            ('surat_penunjukan_penyedia_barang_jasa', SuratPenunjukanPenyediaBarangJasa),
+            ('surat_perintah_mulai_kerja', SuratPerintahMulaiKerja),
+            ('lampiran_berita_acara_pemeriksaan_pekerjaan', LampiranBeritaAcaraPemeriksaanPekerjaan),
+            ('lampiran_berita_acara_pemeriksaan_tahap_ke', LampiranBeritaAcaraPemeriksaanTahapKe),
         ]
+
         
         result = []
 
