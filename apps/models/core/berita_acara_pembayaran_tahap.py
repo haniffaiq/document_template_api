@@ -14,6 +14,11 @@ class BeritaAcaraPembayaranTahap(db.Model):
     tahap_ke_terbilang = db.Column(db.Text, nullable=True)
     pembayaran_bulan = db.Column(db.Text, nullable=True)  # Kolom baru
 
+
+    nomor_surat_bap = db.Column(db.String, nullable=True)
+    tanggal_surat_bap = db.Column(db.Date, nullable=True)
+    tanggal_surat_bap_huruf = db.Column(db.String, nullable=True)
+
     # Relasi dengan tabel Project
     project = db.relationship('Project', backref=db.backref('berita_acara_pembayaran_tahap', cascade='all, delete-orphan'), lazy=True)
 
@@ -22,4 +27,9 @@ class BeritaAcaraPembayaranTahap(db.Model):
             setattr(self, key, value)
 
     def as_dict(self):
-        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+        result = {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
+        if self.tanggal_surat_bap:
+            result['tanggal_surat_bap'] = self.tanggal_surat_bap.strftime('%d-%m-%Y')
+
+        return result

@@ -99,6 +99,8 @@ class SyaratSyaratKhususKontrak(db.Model):
     kondisi_table_6_daftar_personel_manajerial = db.Column(db.ARRAY(db.String))
     status_kepemilikan_table_6_daftar_personel_manajerial = db.Column(db.ARRAY(db.String))
     keterangan_table_6_daftar_personel_manajerial = db.Column(db.ARRAY(db.String))
+    satuan_table_2_daftar_harga_satuan = db.Column(db.Text, nullable=True)
+    masa_pelaksanaan_pekerjaan_huruf = db.Column(db.Text, nullable=True)
 
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())

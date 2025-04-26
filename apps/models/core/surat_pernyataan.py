@@ -24,6 +24,9 @@ class SuratPernyataan(db.Model):
     hari_dan_tanggal_surat_pernyataan_huruf = db.Column(db.Date, nullable=True)
     hari_dan_tanggal_surat_pernyataan_huruf_teks = db.Column(db.Text, nullable=True)
     nomor_surat_pernyataan = db.Column(db.Text, nullable=True)
+    hari_dan_tanggal_surat_pernyataan_huruf_date = db.Column(db.Date, nullable=True)
+    hari_dan_tanggal_surat_pernyataan_huruf_text = db.Column(db.Text, nullable=True)
+
 
     # Relasi
     project = db.relationship('Project', backref=db.backref('surat_pernyataan', cascade='all, delete-orphan'), lazy=True)
@@ -41,5 +44,7 @@ class SuratPernyataan(db.Model):
             result['tanggal_surat_keputusan_rektor'] = self.tanggal_surat_keputusan_rektor.strftime('%d-%m-%Y')
         if self.hari_dan_tanggal_surat_pernyataan_huruf:
             result['hari_dan_tanggal_surat_pernyataan_huruf'] = self.hari_dan_tanggal_surat_pernyataan_huruf.strftime('%d-%m-%Y')
+        if self.hari_dan_tanggal_surat_pernyataan_huruf_date:
+            result['hari_dan_tanggal_surat_pernyataan_huruf_date'] = self.hari_dan_tanggal_surat_pernyataan_huruf_date.strftime('%d-%m-%Y')
 
         return result

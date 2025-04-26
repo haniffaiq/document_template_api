@@ -9,10 +9,14 @@ class SuratPerintahMulaiKerja(db.Model):
     nomor_spmk = db.Column(db.String(100), nullable=False)
     tanggal_spmk = db.Column(db.Date, nullable=False)
     tanggal_spmk_huruf = db.Column(db.String(255), nullable=False)
-    lokasi_spmk = db.Column(db.String(255))
     tanggal_mulai_kerja = db.Column(db.Date, nullable=False)
     waktu_penyelesaian = db.Column(db.Date, nullable=False)
-    paragraf_type = db.Column(db.Text)
+    ruanglingkup_pekerjaan = db.Column(db.Text)
+
+    rentang_hari_pengerjaan = db.Column(db.Text, nullable=True)
+    rentang_hari_pengerjaan_huruf = db.Column(db.Text, nullable=True)
+    denda_pengerjaan = db.Column(db.Text, nullable=True)
+
     
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())

@@ -14,9 +14,6 @@ class Project(db.Model):
         nullable=True
     )
 
-    nomor_surat_bap = db.Column(db.String(255), nullable=True)
-    tanggal_surat_bap = db.Column(db.Date, nullable=True)
-    tanggal_surat_bap_huruf = db.Column(db.String(255), nullable=True)
     nomor_berita_acara_pemeriksaan_pekerjaan = db.Column(db.String(255), nullable=True)
     tanggal_berita_acara_pemeriksaan_pekerjaan = db.Column(db.Date, nullable=True)
     tanggal_berita_acara_pemeriksaan_pekerjaan_huruf = db.Column(db.String(255), nullable=True)

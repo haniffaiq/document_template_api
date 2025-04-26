@@ -22,6 +22,8 @@ class BeritaAcaraPemeriksaanTahapKe(db.Model):
     jumlah = db.Column(db.ARRAY(db.Integer), nullable=True)
     satuan_pekerjaan = db.Column(db.ARRAY(db.String), nullable=True)
     keterangan = db.Column(db.ARRAY(db.String), nullable=True)
+    untuk_bulan = db.Column(db.Text, nullable=True)
+
 
     # Kolom tambahan sesuai revisi
     tanggal_awal = db.Column(db.Date, nullable=True)

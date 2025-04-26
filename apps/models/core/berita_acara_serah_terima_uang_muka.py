@@ -14,6 +14,8 @@ class BeritaAcaraSerahTerimaUangMuka(db.Model):
     tanggal_surat_perjanjian_kontrak = db.Column(db.Date, nullable=True)
     jumlah_yang_dibulatkan_total = db.Column(db.Numeric, nullable=True)
     jumlah_yang_dibulatkan_huruf = db.Column(db.String(255), nullable=True)
+    untuk_bulan = db.Column(db.Text, nullable=True)
+
 
     # Relasi dengan tabel Project
     project = db.relationship('Project', backref=db.backref('berita_acara_serah_terima_uang_muka', cascade='all, delete-orphan'), lazy=True)

@@ -8,7 +8,7 @@ class SuratPerjanjianKontrak(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('ikram.project.id', ondelete='CASCADE'), nullable=False)
 
     tanggal_nomor_surat_berita_acara_hasil_pemilihan_nomor = db.Column(db.Date)
-
+    nomor_surat_berita_acara_hasil_pemilihan_nomor = db.Column(db.String)
     total_harga_angka = db.Column(db.Numeric)
     total_harga_huruf = db.Column(db.String)
     kode_akun_kegiatan = db.Column(db.String)

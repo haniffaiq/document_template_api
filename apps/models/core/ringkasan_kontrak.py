@@ -22,6 +22,8 @@ class RingkasanKontrak(db.Model):
     nominal_pembayaran_angka = db.Column(db.Integer, nullable=True)
     nominal_pembayaran_huruf = db.Column(db.Text, nullable=True)
     jangka_waktu_pelaksanaan_huruf = db.Column(db.Text, nullable=True)
+    tanggal_ringkasan_kontrak = db.Column(db.Date, nullable=True)
+
 
     project = db.relationship('Project', backref=db.backref('ringkasan_kontrak', cascade='all, delete-orphan'), lazy=True)
 
@@ -33,4 +35,6 @@ class RingkasanKontrak(db.Model):
         result = {column.name: getattr(self, column.name) for column in self.__table__.columns}
         if self.tanggal_dipa:
             result['tanggal_dipa'] = self.tanggal_dipa.strftime('%d-%m-%Y')
+        if self.tanggal_ringkasan_kontrak:
+            result['tanggal_ringkasan_kontrak'] = self.tanggal_ringkasan_kontrak.strftime('%d-%m-%Y')
         return result

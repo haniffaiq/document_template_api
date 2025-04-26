@@ -31,6 +31,10 @@ class BeritaAcaraPembayaranTermin(db.Model):
     # Kolom tambahan terbaru
     total_retensi_pekerjaan = db.Column(db.Integer, nullable=True)
     total_pengembalian_uang_muka = db.Column(db.Integer, nullable=True)
+
+    nomor_surat_bap = db.Column(db.String, nullable=True)
+    tanggal_surat_bap = db.Column(db.Date, nullable=True)
+    tanggal_surat_bap_huruf = db.Column(db.String, nullable=True)
     
     project = db.relationship('Project', backref=db.backref('berita_acara_pembayaran_termin', cascade='all, delete-orphan'), lazy=True)
 
@@ -40,3 +44,11 @@ class BeritaAcaraPembayaranTermin(db.Model):
 
     def as_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+    
+    def as_dict(self):
+        result = {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
+        if self.tanggal_surat_bap:
+            result['tanggal_surat_bap'] = self.tanggal_surat_bap.strftime('%d-%m-%Y')
+
+        return result

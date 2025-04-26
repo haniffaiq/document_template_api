@@ -15,7 +15,7 @@ class SuratPenunjukanPenyediaBarangJasa(db.Model):
     jangka_waktu_pekerjaan_angka = db.Column(db.Integer)
     jangka_waktu_pekerjaan_huruf = db.Column(db.String(255))
     uu_pp_aturan_sanksi = db.Column(db.String(255))
-    tembusan = db.Column(db.Text)
+    tembusan = db.Column(db.ARRAY(db.Text), nullable=True)  # <- Ini diubah menjadi ARRAY of TEXT
 
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
