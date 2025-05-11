@@ -16,6 +16,10 @@ class KwitansiTermin(db.Model):
     tanggal_surat_addendum = db.Column(db.Date, nullable=True)
     termin_ke = db.Column(db.Integer, nullable=True)
     termin_ke_terbilang = db.Column(db.Text, nullable=True)
+    nomor_surat_bap = db.Column(db.Text, nullable=True)
+    tanggal_surat_bap = db.Column(db.Date, nullable=True)
+    tanggal_kwitansi = db.Column(db.Date, nullable=True)
+
 
     project = db.relationship('Project', backref=db.backref('kwitansi_termin', cascade='all, delete-orphan'), lazy=True)
 
@@ -24,4 +28,16 @@ class KwitansiTermin(db.Model):
             setattr(self, key, value)
 
     def as_dict(self):
-        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+        result = {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
+        # Format tanggal menjadi DD-MM-YYYY jika ada
+        if self.tanggal_surat_sumber_dana:
+            result['tanggal_surat_sumber_dana'] = self.tanggal_surat_sumber_dana.strftime('%d-%m-%Y')
+        if self.tanggal_surat_addendum:
+            result['tanggal_surat_addendum'] = self.tanggal_surat_addendum.strftime('%d-%m-%Y')
+        if self.tanggal_surat_bap:
+            result['tanggal_surat_bap'] = self.tanggal_surat_bap.strftime('%d-%m-%Y')
+        if self.tanggal_kwitansi:
+            result['tanggal_kwitansi'] = self.tanggal_kwitansi.strftime('%d-%m-%Y')
+
+        return result

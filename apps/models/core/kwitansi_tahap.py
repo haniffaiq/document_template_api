@@ -21,6 +21,11 @@ class KwitansiTahap(db.Model):
     surat_addendum = db.Column(db.String(255), nullable=True)  # Surat Addendum
     tanggal_surat_addendum = db.Column(db.Date, nullable=True)  # Tanggal Surat Addendum
 
+    nomor_surat_bap = db.Column(db.Text, nullable=True)
+    tanggal_surat_bap = db.Column(db.Date, nullable=True)
+    tanggal_kwitansi = db.Column(db.Date, nullable=True)
+
+
     # Relasi dengan tabel Project
     project = db.relationship('Project', backref=db.backref('kwitansi', cascade='all, delete-orphan'), lazy=True)
 
@@ -36,5 +41,9 @@ class KwitansiTahap(db.Model):
             result['tanggal_surat_sumber_dana'] = self.tanggal_surat_sumber_dana.strftime('%d-%m-%Y')
         if self.tanggal_surat_addendum:
             result['tanggal_surat_addendum'] = self.tanggal_surat_addendum.strftime('%d-%m-%Y')
+        if self.tanggal_surat_bap:
+            result['tanggal_surat_bap'] = self.tanggal_surat_bap.strftime('%d-%m-%Y')
+        if self.tanggal_kwitansi:
+            result['tanggal_kwitansi'] = self.tanggal_kwitansi.strftime('%d-%m-%Y')
 
         return result

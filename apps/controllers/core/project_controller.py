@@ -20,7 +20,7 @@ from models.core.surat_penunjukan_penyedia_barang_jasa import SuratPenunjukanPen
 from models.core.surat_perintah_mulai_kerja import SuratPerintahMulaiKerja
 from models.core.lampiran_berita_acara_pemeriksaan_pekerjaan import LampiranBeritaAcaraPemeriksaanPekerjaan
 from models.core.lampiran_berita_acara_pemeriksaan_tahap_ke import LampiranBeritaAcaraPemeriksaanTahapKe
-
+from models.core.berita_acara_serah_terima_tahap import BeritaAcaraSerahTerimaTahap
 import json
 
 # Create a new project
@@ -107,6 +107,8 @@ def get_tables_with_project_id(id):
             ('surat_perintah_mulai_kerja', SuratPerintahMulaiKerja),
             ('lampiran_berita_acara_pemeriksaan_pekerjaan', LampiranBeritaAcaraPemeriksaanPekerjaan),
             ('lampiran_berita_acara_pemeriksaan_tahap_ke', LampiranBeritaAcaraPemeriksaanTahapKe),
+            ('berita_acara_serah_terima_tahap', BeritaAcaraSerahTerimaTahap),
+
         ]
 
         

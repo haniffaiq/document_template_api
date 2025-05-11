@@ -66,6 +66,9 @@ class Project(db.Model):
     nomor_berita_acara_serah_terima = db.Column(db.Text, nullable=True)
     tanggal_berita_acara_serah_terima = db.Column(db.Date, nullable=True)
 
+    tanggal_surat_perjanjian_kontrak_huruf = db.Column(db.Text, nullable=True)
+
+
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
             setattr(self, key, value)

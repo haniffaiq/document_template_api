@@ -13,11 +13,13 @@ class BeritaAcaraPembayaranTahap(db.Model):
     jumlah_uang_yang_harus_dibayarkan_huruf = db.Column(db.String(255), nullable=True)
     tahap_ke_terbilang = db.Column(db.Text, nullable=True)
     pembayaran_bulan = db.Column(db.Text, nullable=True)  # Kolom baru
-
+    
 
     nomor_surat_bap = db.Column(db.String, nullable=True)
     tanggal_surat_bap = db.Column(db.Date, nullable=True)
     tanggal_surat_bap_huruf = db.Column(db.String, nullable=True)
+    nomor_bap_serahterima = db.Column(db.Text, nullable=True)
+    tanggal_bap_serahterima = db.Column(db.Date, nullable=True)
 
     # Relasi dengan tabel Project
     project = db.relationship('Project', backref=db.backref('berita_acara_pembayaran_tahap', cascade='all, delete-orphan'), lazy=True)
@@ -31,5 +33,7 @@ class BeritaAcaraPembayaranTahap(db.Model):
 
         if self.tanggal_surat_bap:
             result['tanggal_surat_bap'] = self.tanggal_surat_bap.strftime('%d-%m-%Y')
+        if self.tanggal_bap_serahterima:
+            result['tanggal_bap_serahterima'] = self.tanggal_bap_serahterima.strftime('%d-%m-%Y')
 
         return result
