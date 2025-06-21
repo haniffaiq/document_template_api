@@ -64,18 +64,18 @@ def get_all_projects():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# def get_project_by_id(id):
-#     try:
-#         # Fetch the project by ID
-#         project = Project.query.get(id)
+def get_project_by_id(id):
+    try:
+        # Fetch the project by ID
+        project = Project.query.get(id)
         
-#         # If project not found, return 404 error
-#         if not project:
-#             return jsonify({"error": "Project not found"}), 404
+        # If project not found, return 404 error
+        if not project:
+            return jsonify({"error": "Project not found"}), 404
         
-#         return jsonify(project.as_dict()), 200
-#     except Exception as e:
-#         return jsonify({"error": str(e)}), 500
+        return jsonify(project.as_dict()), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 
     
 def get_tables_with_project_id(id):
     # Get the project_id from request arguments
@@ -127,7 +127,8 @@ def get_tables_with_project_id(id):
         
         # If no records found, return a message
         if not result:
-            return jsonify({"message": "No records found with the specified project_id"}), 404
+            get_project_by_id(project_id)
+            #return jsonify({"message": "No records found with the specified project_id"}), 404
 
         return jsonify(final_result), 200
 
